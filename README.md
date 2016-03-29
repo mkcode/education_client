@@ -1,8 +1,37 @@
 # EducationStats
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/education_stats`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem serves as an abstract Statd client which forwards Statsd commands to
+one or many configured Statsd clients. These clients may include a
+HostedGraphite client, which can be built using an API key.
 
-TODO: Delete this and the text above, and describe your gem
+## Usage
+
+Configure the client. The following example sets up two Statsd clients, one on
+HostedGraphite, and one manually configured. All that is needed to use a
+HostedGraphite client is to set the `hostedgraphite_api_key`. As many clients as
+you like may be added through the `add_statsd_client` method.
+
+```ruby
+  other_client = Statsd.new(ENV['STATSD_HOST'], ENV['STATSD_PORT'], ENV['STATSD_KEY']).tap do |statsd|
+    statsd.namespace = "education.#{Rails.env}.rails"
+  end
+
+  EducationStats.configure do |config|
+    config.hosted_graphite_api_key = 'abc123'
+    config.add_statsd_client(other_client)
+  end
+```
+
+Grab the client and send some commands:
+
+```ruby
+  client = EducationStats.client
+
+  client.increment 'education.mymetric'
+  client.time 'education.my_timer' do
+    @app.expensive_call()
+  end
+```
 
 ## Installation
 
@@ -19,10 +48,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install education_stats
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
