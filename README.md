@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mkcode/education_stats.svg?branch=master)](https://travis-ci.org/mkcode/education_stats)
+
 # EducationStats
 
 This gem serves as an abstract Statd client which forwards Statsd commands to
