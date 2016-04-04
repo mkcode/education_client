@@ -60,6 +60,17 @@ module EducationStats
       @use_hosted_graphite ||= !!hosted_graphite_api_key
     end
 
+    # Public: returns EducationStats to its original unconfigured state
+    #
+    # Returns an unconfigured EducationStats class
+    def reset
+      @hosted_graphite_api_key = nil
+      @use_hosted_graphite = nil
+      @all_clients = nil
+      @statsd_clients = nil
+      self
+    end
+
     private
     # Internal: Returns an array of manually added clients.
     #
