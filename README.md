@@ -11,7 +11,8 @@ HostedGraphite client, which can be built using an API key.
 Configure the client. The following example sets up two Statsd clients, one on
 HostedGraphite, and one manually configured. All that is needed to use a
 HostedGraphite client is to set the `hostedgraphite_api_key`. As many clients as
-you like may be added through the `add_statsd_client` method.
+you like may be added through the `add_statsd_client` method. A namespace for
+hostedgraphite may also be set using the `hosted_graphite_namespace=` method.
 
 ```ruby
   other_client = Statsd.new(ENV['STATSD_HOST'], ENV['STATSD_PORT'], ENV['STATSD_KEY']).tap do |statsd|
@@ -19,7 +20,8 @@ you like may be added through the `add_statsd_client` method.
   end
 
   EducationStats.configure do |config|
-    config.hosted_graphite_api_key = 'abc123'
+    config.hosted_graphite_api_key   = 'abc123'
+    config.hosted_graphite_namespace = 'rails.requests'
     config.add_statsd_client(other_client)
   end
 ```
