@@ -1,7 +1,7 @@
+require 'statsd'
+
 require "education_stats/version"
 require "education_stats/client"
-
-require 'statsd-ruby'
 
 module EducationStats
   HOSTED_GRAPHITE_HOST = 'statsd.hostedgraphite.com'.freeze
