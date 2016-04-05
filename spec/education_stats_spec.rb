@@ -48,4 +48,18 @@ describe EducationStats do
       end
     end
   end
+
+  describe 'the hosted graphite client' do
+    before do
+      described_class.configure do |config|
+        config.hosted_graphite_api_key = 'abc123'
+        config.hosted_graphite_namespace = 'namespace'
+      end
+    end
+
+    it 'its namespace is the api_key + the namespace' do
+      client = described_class.all_clients.first
+      expect(client.namespace).to eq('abc123.namespace')
+    end
+  end
 end

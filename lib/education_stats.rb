@@ -8,7 +8,7 @@ module EducationStats
   HOSTED_GRAPHITE_PORT = 8125.freeze
 
   class << self
-    attr_accessor :hosted_graphite_api_key
+    attr_accessor :hosted_graphite_api_key, :hosted_graphite_namespace
     attr_writer   :use_hosted_graphite
 
     # Public: Configuration for EducationStats
@@ -65,6 +65,7 @@ module EducationStats
     # Returns an unconfigured EducationStats class
     def reset
       @hosted_graphite_api_key = nil
+      @hosted_graphite_namespace = nil
       @use_hosted_graphite = nil
       @all_clients = nil
       @statsd_clients = nil
@@ -84,7 +85,9 @@ module EducationStats
     # Returns a Statsd class configured for HostedGraphite
     def build_hosted_graphite_statsd_client
       Statsd.new(HOSTED_GRAPHITE_HOST, HOSTED_GRAPHITE_PORT).tap do |statsd|
-        statsd.namespace = hosted_graphite_api_key
+        statsd.namespace = [
+          hosted_graphite_api_key, @hosted_graphite_namespace
+        ].compact.join('.')
       end
     end
   end
