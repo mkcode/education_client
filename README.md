@@ -39,9 +39,11 @@ Grab the client and send some commands:
 
 ## Installation
 
-Add this line to your application's Gemfile:
+education-stats uses the github fork of statsd. It must be specified in your Gem
+dependencies as well:
 
 ```ruby
+gem 'statsd-ruby', require: 'statsd', github: 'github/statsd-ruby'
 gem 'education_stats'
 ```
 
