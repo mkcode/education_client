@@ -33,7 +33,7 @@ module EducationStats
     # Returns an array of return values from the command called on each client.
     FORWARD_METHODS.each do |method|
       define_method method do |*args|
-        @all_clients.map { |client| client.send(method, *args) }
+        @all_clients.map { |client| client.__send__(method, *args) }
       end
     end
   end
